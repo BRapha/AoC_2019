@@ -1,5 +1,3 @@
-
-
 def get_module_weights_from_file(filename):
     with open(filename, 'r') as infile:
         for line in infile:
