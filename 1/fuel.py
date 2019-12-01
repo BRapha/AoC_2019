@@ -1,10 +1,14 @@
+def get_int_value_from_line(line):
+    try:
+        return int(line)
+    except ValueError:
+        return 0
+
+
 def get_module_weights_from_file(filename):
     with open(filename, 'r') as infile:
         for line in infile:
-            try:
-                yield int(line)
-            except ValueError:
-                yield 0
+            yield get_int_value_from_line(line)
 
 
 def calculate_fuel_for_weight(weight):
