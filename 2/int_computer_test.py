@@ -1,15 +1,31 @@
 import unittest
-from int_computer import IntComputer
+import int_computer
 
 
 class TestIntComputer(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.computer = IntComputer("mock")
-
     def test_reading(self):
-        self.assertEqual([1, 0, 0, 0, 99], self.computer.parse_sequence("1,0,0,0,99"))
+        self.assertEqual([1, 0, 0, 0, 99], int_computer.parse_sequence("1,0,0,0,99"))
 
     def test_addition_flag(self):
-        IntComputer.evaluate('1,0,0,0,99')
+        expected = [2, 0, 0, 0, 99]
+        outcome = [1, 0, 0, 0, 99]
+        int_computer.transform(outcome)
+        self.assertEqual(expected, outcome)
 
+    def test_multiplication_flag(self):
+        expected = [2, 3, 0, 6, 99]
+        outcome = [2, 3, 0, 3, 99]
+        int_computer.transform(outcome)
+        self.assertEqual(expected, outcome)
+
+    def test_break_flag(self):
+        expected = [99, 3, 0, 3, 99]
+        outcome = [99, 3, 0, 3, 99]
+        int_computer.transform(outcome)
+        self.assertEqual(expected, outcome)
+
+    def test_multi_sequence(self):
+        expected = [30, 1, 1, 4, 2, 5, 6, 0, 99]
+        outcome = [1, 1, 1, 4, 99, 5, 6, 0, 99]
+        int_computer.transform(outcome)
+        self.assertEqual(expected, outcome)
