@@ -24,7 +24,12 @@ if __name__ == "__main__":
             sequence.extend(parse_sequence(line))
 
     # apply task magic
-    sequence[1], sequence[2] = 12, 2
+    for noun in range(100):
+        for verb in range(100):
+            test_sequence = sequence.copy()
+            test_sequence[1], test_sequence[2] = noun, verb
+            transform(test_sequence)
 
-    transform(sequence)
-    print(sequence[0])
+            if test_sequence[0] == 19690720:
+                print(100 * noun + verb)
+                exit(0)
