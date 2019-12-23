@@ -1,5 +1,5 @@
 import unittest
-import int_computer
+from day_2 import int_computer
 
 
 class TestIntComputer(unittest.TestCase):
