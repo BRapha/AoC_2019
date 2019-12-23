@@ -12,11 +12,13 @@ def get_module_weights_from_file(filename):
 
 
 def calculate_fuel_for_weight(weight):
+    fuel_for_weight = 0
     fuel = weight // 3 - 2
-    if fuel <= 0:
-        return 0
+    while fuel > 0:
+        fuel_for_weight += fuel
+        fuel = fuel // 3 - 2
 
-    return fuel + calculate_fuel_for_weight(fuel)
+    return fuel_for_weight
 
 
 if __name__ == '__main__':

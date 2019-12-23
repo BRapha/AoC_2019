@@ -1,3 +1,5 @@
+from shared.parser import Parser
+
 
 def parse_sequence(line):
     return [int(s) for s in line.split(',')]
@@ -19,9 +21,8 @@ def transform(sequence):
 
 if __name__ == "__main__":
     sequence = []
-    with open('input.txt', 'r') as infile:
-        for line in infile:
-            sequence.extend(parse_sequence(line))
+    for line in Parser.ReadLines('input.txt'):
+        sequence.extend(parse_sequence(line))
 
     # apply task magic
     for noun in range(100):
