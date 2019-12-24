@@ -29,3 +29,10 @@ class TestDistanceCalculator(unittest.TestCase):
         expected_dist = 159
         manhattan_dist = distance_calculator.GetClosestIntersection(first, second)
         self.assertEqual(expected_dist, manhattan_dist)
+
+    def test_case_3(self):
+        first = "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51"
+        second = "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7"
+        expected_dist = 135
+        manhattan_dist = distance_calculator.GetClosestIntersection(first, second)
+        self.assertEqual(expected_dist, manhattan_dist)

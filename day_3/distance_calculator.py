@@ -4,7 +4,7 @@ from shared.parser import Parser
 def YieldPoints(s):
     x = y = 0
     for segment in s.split(','):
-        direction, steps = segment[0], int(segment[1])
+        direction, steps = segment[0], int(segment[1:])
         for _ in range(steps):
             if direction == 'L':
                 x -= 1
