@@ -1,7 +1,7 @@
 from shared.parser import Parser
 
 
-def YieldPoints(s):
+def YieldSteps(s):
     x = y = 0
     for segment in s.split(','):
         direction, steps = segment[0], int(segment[1:])
@@ -19,18 +19,25 @@ def YieldPoints(s):
 
 
 def FindClosestIntersection(trail_map, s):
+    path_length = 0
     closest_dist = None
-    for x, y in YieldPoints(s):
+    for x, y in YieldSteps(s):
+        path_length += 1
         if (x, y) in trail_map:
-            distance = abs(x)+abs(y)
-            if closest_dist is None or closest_dist > distance:
-                closest_dist = distance
+            total_dist = path_length + trail_map[(x, y)]
+            if closest_dist is None or closest_dist > total_dist:
+                closest_dist = total_dist
 
     return closest_dist
 
 
 def GetClosestIntersection(s1, s2):
-    trail = set(point for point in YieldPoints(s1))
+    path_length = 0
+    trail = dict()
+    for point in YieldSteps(s1):
+        path_length += 1
+        trail.setdefault(point, path_length)
+
     return FindClosestIntersection(trail, s2)
 
 
