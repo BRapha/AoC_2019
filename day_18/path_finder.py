@@ -6,18 +6,18 @@ def ReadFileToGrid(filename):
     return [list(line.rstrip()) for line in Parser.ReadLines(filename)]
 
 
-def FindAllNodes(grid):
-    nodes = []
+def FindAllNodeCoords(grid):
+    coords = []
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             if grid[i][j] not in ('.', '#'):
-                nodes.append((i, j))
+                coords.append((i, j))
 
-    return nodes
+    return coords
 
 
-def BuildGraph(grid, nodes):
-    graph = {grid[x][y]: dict() for (x, y) in nodes}
+def BuildGraph(grid, node_coords):
+    graph = {grid[x][y]: dict() for (x, y) in node_coords}
 
     def ExploreNeigbors(nx, ny):
         char = grid[nx][ny]
@@ -35,8 +35,8 @@ def BuildGraph(grid, nodes):
                     elif content != '#':
                         graph[char][content] = dist + 1
 
-    while nodes:
-        x, y = nodes.pop()
+    while node_coords:
+        x, y = node_coords.pop()
         ExploreNeigbors(x, y)
 
     return graph
@@ -44,8 +44,8 @@ def BuildGraph(grid, nodes):
 
 def GenerateGraph(filename):
     grid = ReadFileToGrid(filename)
-    nodes = FindAllNodes(grid)
-    return BuildGraph(grid, nodes)
+    node_coords = FindAllNodeCoords(grid)
+    return BuildGraph(grid, node_coords)
 
 
 def FindShortestPath(graph):
