@@ -17,9 +17,10 @@ def FindAllNodes(grid):
 
 
 def BuildGraph(grid, nodes):
-    graph = dict()
+    graph = {grid[x][y]: dict() for (x, y) in nodes}
 
-    def ExploreNeigbors(nx, ny, char):
+    def ExploreNeigbors(nx, ny):
+        char = grid[nx][ny]
         visited = {(nx, ny)}
         queue = deque([(nx, ny, 0)])
         while queue:
@@ -36,9 +37,7 @@ def BuildGraph(grid, nodes):
 
     while nodes:
         x, y = nodes.pop()
-        c = grid[x][y]
-        graph[c] = dict()
-        ExploreNeigbors(x, y, c)
+        ExploreNeigbors(x, y)
 
     return graph
 
