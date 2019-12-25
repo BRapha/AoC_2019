@@ -6,20 +6,17 @@ def ReadFileToGrid(filename):
     return [list(line.rstrip()) for line in Parser.ReadLines(filename)]
 
 
-def FindAllNodeCoords(grid):
-    coords = []
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            if grid[i][j] not in ('.', '#'):
-                coords.append((i, j))
+def BuildGraph(grid):
+    graph = {}
 
-    return coords
+    def IterNodesInGrid():
+        for x in range(len(grid)):
+            for y in range(len(grid[x])):
+                c = grid[x][y]
+                if c not in ('.', '#'):
+                    yield x, y, c
 
-
-def BuildGraph(grid, node_coords):
-    graph = {grid[x][y]: dict() for (x, y) in node_coords}
-
-    def AddNeigborsToGraph(nx, ny):
+    def FindNeighbourNodes(nx, ny):
         visited = {(nx, ny)}
         queue = deque([(nx, ny, 0)])
         while queue:
@@ -33,17 +30,16 @@ def BuildGraph(grid, node_coords):
                     elif char != '#':
                         graph[grid[nx][ny]][char] = dist + 1
 
-    while node_coords:
-        x, y = node_coords.pop()
-        AddNeigborsToGraph(x, y)
+    for x, y, c in IterNodesInGrid():
+        graph[c] = dict()
+        FindNeighbourNodes(x, y)
 
     return graph
 
 
 def GenerateGraph(filename):
     grid = ReadFileToGrid(filename)
-    node_coords = FindAllNodeCoords(grid)
-    return BuildGraph(grid, node_coords)
+    return BuildGraph(grid)
 
 
 def FindShortestPath(graph):
