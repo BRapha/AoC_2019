@@ -16,30 +16,29 @@ def FindAllNodes(grid):
     return nodes
 
 
-def ExploreNeigbors(grid, graph, node):
-    nx, ny, char = node
-    visited = {(nx, ny)}
-    queue = deque([(nx, ny, 0)])
-    while queue:
-        x, y, dist = queue.popleft()
-        for i, j in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-            pi, pj = x + i, y + j
-            if pi < len(grid) and pj < len(grid[pi]) and (pi, pj) not in visited:
-                visited.add((pi, pj))
-                content = grid[pi][pj]
-                if content == '.':
-                    queue.append((pi, pj, dist + 1))
-                elif content != '#':
-                    graph[char][content] = dist + 1
-
-
 def BuildGraph(grid, nodes):
     graph = dict()
+
+    def ExploreNeigbors(nx, ny, char):
+        visited = {(nx, ny)}
+        queue = deque([(nx, ny, 0)])
+        while queue:
+            x, y, dist = queue.popleft()
+            for i, j in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                pi, pj = x + i, y + j
+                if pi < len(grid) and pj < len(grid[pi]) and (pi, pj) not in visited:
+                    visited.add((pi, pj))
+                    content = grid[pi][pj]
+                    if content == '.':
+                        queue.append((pi, pj, dist + 1))
+                    elif content != '#':
+                        graph[char][content] = dist + 1
+
     while nodes:
         x, y = nodes.pop()
-        char = grid[x][y]
-        graph[char] = dict()
-        ExploreNeigbors(grid, graph, (x, y, char))
+        c = grid[x][y]
+        graph[c] = dict()
+        ExploreNeigbors(x, y, c)
 
     return graph
 
