@@ -13,8 +13,8 @@ class TestPathFinder(unittest.TestCase):
 
     def test_find_at(self):
         grid = path_finder.ReadFileToGrid("testcase1.txt")
-        expected_coords = 1, 5
-        coords = path_finder.FindAt(grid)
+        expected_coords = [(1, 1), (1, 3), (1, 5), (1, 7)]
+        coords = path_finder.FindAllNodes(grid)
         self.assertEqual(expected_coords, coords)
 
     def test_graph(self):
