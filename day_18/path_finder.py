@@ -20,20 +20,18 @@ def BuildGraph(grid, node_coords):
     graph = {grid[x][y]: dict() for (x, y) in node_coords}
 
     def AddNeigborsToGraph(nx, ny):
-        char = grid[nx][ny]
         visited = {(nx, ny)}
         queue = deque([(nx, ny, 0)])
         while queue:
             x, y, dist = queue.popleft()
-            for i, j in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-                pi, pj = x + i, y + j
+            for pi, pj in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
                 if pi < len(grid) and pj < len(grid[pi]) and (pi, pj) not in visited:
                     visited.add((pi, pj))
-                    content = grid[pi][pj]
-                    if content == '.':
+                    char = grid[pi][pj]
+                    if char == '.':
                         queue.append((pi, pj, dist + 1))
-                    elif content != '#':
-                        graph[char][content] = dist + 1
+                    elif char != '#':
+                        graph[grid[nx][ny]][char] = dist + 1
 
     while node_coords:
         x, y = node_coords.pop()
