@@ -37,6 +37,6 @@ def BuildGraph(grid):
     return graph
 
 
-def GenerateGraph(filename):
+def BuildGraphFromFile(filename):
     grid = ReadFileToGrid(filename)
     return BuildGraph(grid)

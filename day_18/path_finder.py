@@ -1,10 +1,9 @@
-
+from day_18 import graph_builder
 
 
 def FindShortestPath(graph):
     start = graph.pop('@')
 
 
-
 if __name__ == '__main__':
-    pass
+    graph = graph_builder.BuildGraphFromFile('input.txt')
