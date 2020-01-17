@@ -33,4 +33,8 @@ class PathFinderTest(unittest.TestCase):
         finder = path_finder.PathFinder(graph)
         self.assertEqual(expected_dist, finder.FindShortestPath())
 
-
+    def test_case_5(self):
+        graph = graph_builder.BuildGraphFromFile('testcase5.txt')
+        expected_dist = 81
+        finder = path_finder.PathFinder(graph)
+        self.assertEqual(expected_dist, finder.FindShortestPath())
