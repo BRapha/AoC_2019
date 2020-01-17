@@ -23,7 +23,7 @@ def BuildGraph(grid):
         while queue:
             _row, _col, _dist = queue.popleft()
             for row_i, col_j in ((_row+1, _col), (_row-1, _col), (_row, _col+1), (_row, _col-1)):
-                if row_i < len(grid) and col_j < len(grid[row_i]) and (row_i, col_j) not in visited:
+                if 0 <= row_i < len(grid) and 0 <= col_j < len(grid[row_i]) and (row_i, col_j) not in visited:
                     visited.add((row_i, col_j))
                     char_i = grid[row_i][col_j]
                     if char_i == '.':
