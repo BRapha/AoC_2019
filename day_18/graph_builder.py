@@ -6,33 +6,34 @@ def ReadFileToGrid(filename):
     return [list(line.rstrip()) for line in Parser.ReadLines(filename)]
 
 
+def IterNodesInGrid(grid):
+    for row in range(len(grid)):
+        for col in range(len(grid[row])):
+            char = grid[row][col]
+            if char not in ('.', '#'):
+                yield row, col, char
+
+
 def BuildGraph(grid):
     graph = {}
 
-    def IterNodesInGrid():
-        for x in range(len(grid)):
-            for y in range(len(grid[x])):
-                c = grid[x][y]
-                if c not in ('.', '#'):
-                    yield x, y, c
-
-    def FindNeighbourNodes(nx, ny):
-        visited = {(nx, ny)}
-        queue = deque([(nx, ny, 0)])
+    def FindNeighbourNodes(r, c):
+        visited = {(r, c)}
+        queue = deque([(r, c, 0)])
         while queue:
-            x, y, dist = queue.popleft()
-            for pi, pj in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
-                if pi < len(grid) and pj < len(grid[pi]) and (pi, pj) not in visited:
-                    visited.add((pi, pj))
-                    char = grid[pi][pj]
-                    if char == '.':
-                        queue.append((pi, pj, dist + 1))
-                    elif char != '#':
-                        graph[grid[nx][ny]][char] = dist + 1
+            _row, _col, _dist = queue.popleft()
+            for row_i, col_j in ((_row+1, _col), (_row-1, _col), (_row, _col+1), (_row, _col-1)):
+                if row_i < len(grid) and col_j < len(grid[row_i]) and (row_i, col_j) not in visited:
+                    visited.add((row_i, col_j))
+                    char_i = grid[row_i][col_j]
+                    if char_i == '.':
+                        queue.append((row_i, col_j, _dist + 1))
+                    elif char_i != '#':
+                        graph[grid[r][c]][char_i] = _dist + 1
 
-    for x, y, c in IterNodesInGrid():
-        graph[c] = dict()
-        FindNeighbourNodes(x, y)
+    for row, col, char in IterNodesInGrid(grid):
+        graph[char] = dict()
+        FindNeighbourNodes(row, col)
 
     return graph
 

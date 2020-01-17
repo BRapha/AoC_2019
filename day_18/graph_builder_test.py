@@ -4,6 +4,16 @@ import unittest
 
 class GraphBuilderTest(unittest.TestCase):
 
+    def test_iter_nodes(self):
+        grid = [['#', '#', '#', '#', '#', '#', '#', '#', '#'],
+                ['#', 'b', '.', 'A', '.', '@', '.', 'a', '#'],
+                ['#', '#', '#', '#', '#', '#', '#', '#', '#']]
+
+        expected = [(1, 1, 'b'), (1, 3, 'A'), (1, 5, '@'), (1, 7, 'a')]
+        result = [node for node in graph_builder.IterNodesInGrid(grid)]
+        self.assertEqual(expected, result)
+
+
     def test_grid(self):
         expected_grid = [['#', '#', '#', '#', '#', '#', '#', '#', '#'],
                          ['#', 'b', '.', 'A', '.', '@', '.', 'a', '#'],
